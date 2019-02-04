@@ -28,6 +28,29 @@ export class CategoryService {
     );
   }
 
+  create(category: Category): Observable<Category> {
+    return this.http.post(this.apiPath, category).pipe(
+      catchError(this.handleError), // Manipulate error
+      map(this.jsonDataToCategory) // Resolve data to json
+    );
+  }
+
+  update(category: Category): Observable<Category> {
+    const url = this.apiPath + '/' + category.id;
+    return this.http.put(url, category).pipe(// manipulate the return
+      catchError(this.handleError), // Manipulate error
+      map(() => category) // Return the same category
+    );
+  }
+
+  delete(id: Number): Observable<any> {
+    const url = this.apiPath + '/' + id;
+    return this.http.delete(url).pipe(
+      catchError(this.handleError),
+      map(() => null)
+    );
+  }
+
   // PRIVATE METHODS
 
   private jsonDataToCategories(jsonData: any[]): Category[] {
