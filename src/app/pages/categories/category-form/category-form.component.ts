@@ -39,6 +39,16 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
     this.setPageTitle();
   }
 
+  submitForm() {
+    this.submittingForm = true;
+
+    if (this.currentAction === 'new') {
+      this.createCategory();
+    } else { // editing
+      this.updateCategory();
+    }
+  }
+
   // Private methods
   private setCurrentAction() {
     if (this.route.snapshot.url[0].path === 'new') {// First segment of url
@@ -79,6 +89,48 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
       const categoryName = this.category.name || '';
       this.pageTitle = 'Editing category: ' + categoryName;
     }
+  }
+
+  private createCategory() {
+    // Creating a new category and assigning the form values
+    const category: Category = Object.assign(new Category(), this.categoryForm.value);
+    this.categoryService.create(category)
+    .subscribe(
+      new_category => this.actionsFormSuccess(new_category),
+      error => this.actionsForError(error)
+    );
+  }
+
+  private updateCategory() {
+    const category: Category = Object.assign(new Category(), this.categoryForm.value);
+
+    this.categoryService.update(category).subscribe(
+      new_category => this.actionsFormSuccess(new_category),
+      error => this.actionsForError(error)
+    );
+  }
+
+  private actionsFormSuccess(category: Category) {
+    toastr.success('Success!');
+
+    // this.router.navigateByUrl('categories');
+    // (skipLocationChange) Do not add to navegation history
+    this.router.navigateByUrl('categories', {skipLocationChange: true}).then(
+     () => this.router.navigate(['categories', category.id, 'edit'])
+    );
+  }
+
+  private actionsForError(error) {
+    toastr.error('Oh sorry! An error ocurred.');
+
+    this.submittingForm = false;
+
+    if (error.status === 422) {
+      this.serverErrorMessages = JSON.parse(error._body);
+    } else {
+      this.serverErrorMessages = ['Server error. Please try again later.'];
+    }
+
   }
 
 }
