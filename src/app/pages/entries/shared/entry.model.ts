@@ -19,6 +19,6 @@ export class Entry {
   };
 
   get paidText(): string {
-    return this.paid ? 'Paid' : 'Not Paid';
+    return this.paid ? 'Paid' : 'Pending';
   }
 }

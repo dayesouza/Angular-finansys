@@ -10,13 +10,13 @@ import { EntryService } from '../shared/entry.service';
 })
 export class EntryListComponent implements OnInit {
 
-  categories: Entry[] = [];
+  entries: Entry[] = [];
   constructor(private entryService: EntryService ) { }
 
   ngOnInit() {
     this.entryService.getAll().subscribe(
-      categories => this.categories = categories,
-      error => alert('Error getting categories list.')
+      entries => this.entries = entries,
+      error => alert('Error getting entries list.')
     );
   }
 
@@ -24,7 +24,7 @@ export class EntryListComponent implements OnInit {
     const mustDelete = confirm('Do you really want to delete entry ' + entry.name + '?');
     if (mustDelete) {
       this.entryService.delete(entry.id).subscribe(
-        () => this.categories = this.categories.filter(element => element !== entry),
+        () => this.entries = this.entries.filter(element => element !== entry),
         () => 'Error on delete function!'
       );
     }
