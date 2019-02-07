@@ -31,20 +31,92 @@
       Entry info
     </div>
     <div class="card-body">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for='name'>Name</label>
-          <input type="text" class="form-control" id='name' formControlName='name'>
-          <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
-            <div *ngIf="entryForm.get('name').errors.required"> Mandatory field</div>
-            <div *ngIf="entryForm.get('name').errors.minlength"> Please type at least 2 characters</div>
+        <div class="form-row">
+
+          <!-- Type -->
+          <div class="form-group col-md-2">
+            <label for='type'>Type</label>
+
+            <select name="type" id="type" formControlName="type" class='form-control'>
+              <option value="expense">Expense</option>
+              <option value="revenue">Revenue</option>
+            </select>
+
+            <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
+              <div *ngIf="entryForm.get('type').errors.required"> Mandatory field</div>
+            </div>
+            
           </div>
-        
+
+          <!-- Name -->
+          <div class="form-group col-md-5">
+              <label for='name'>Name</label>
+              <input type="text" class="form-control" id='name' formControlName='name'>
+              <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
+                <div *ngIf="entryForm.get('name').errors.required"> Mandatory field</div>
+                <div *ngIf="entryForm.get('name').errors.minlength"> Please type at least 2 characters</div>
+              </div>
+            </div>
+
+          <!-- Amount -->
+          <div class="form-group col-md-3">
+              <label for='amount'>Amount</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input [imask]="imaskConfig" type="text" class="form-control text-right" id='amount' formControlName='amount'>
+              </div>
+              <div class="text-danger" *ngIf="entryForm.get('amount').invalid && entryForm.get('amount').touched">
+                <div *ngIf="entryForm.get('amount').errors.required"> Mandatory field</div>
+              </div>
+            </div>
+
+          <!-- Date -->
+          <div class="form-group col-md-2">
+              <label for='date'>Date</label>
+              <p-calendar
+                id="date"
+                formControlName="date"
+                inputStyleClass="form-control"
+                dataType="string"
+                >
+              </p-calendar>
+              <div class="text-danger" *ngIf="entryForm.get('date').invalid && entryForm.get('date').touched">
+                <div *ngIf="entryForm.get('date').errors.required"> Mandatory field</div>
+              </div>
+            </div>
         </div>
+
+
+
+      <div class="form-row">
+        <!-- Paid -->
+          <div class="form-group col-md-2">
+              <label for='paid'>Paid</label>
+              <div class="btn-group">
+                <label (click)="entryForm.get('paid').setValue(true)" [class.active]="entryForm.get('paid').value == true" class="btn btn-outline-info">
+                  Paid
+                </label>
+                <label (click)="entryForm.get('paid').setValue(false)" [class.active]="entryForm.get('paid').value == false" class="btn btn-outline-info">
+                  Pending
+                </label>
+
+              </div>  
+              
+              
+              <div class="text-danger" *ngIf="entryForm.get('paid').invalid && entryForm.get('paid').touched">
+                <div *ngIf="entryForm.get('paid').errors.required"> Mandatory field</div>
+              </div>
+            </div>
+
+
         <div class="form-group col-md-8">
           <label for='description'>Description</label>
           <input type="text" class="form-control" id='description' formControlName='description'> 
         </div>
+
+
 
 
       </div>
