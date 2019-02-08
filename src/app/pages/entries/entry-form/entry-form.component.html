@@ -38,7 +38,7 @@
             <label for='type'>Type</label>
 
             <select name="type" id="type" formControlName="type" class='form-control'>
-              <option *ngFor="let option of typeOptions" value="option.value">{{option.text}}</option>
+              <option *ngFor="let option of typeOptions" value="{{option.value}}">{{option.text}}</option>
             </select>
 
             <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
@@ -108,7 +108,7 @@
               <label for='type'>Category</label>
   
               <select name="categoryId" id="type" formControlName="categoryId" class='form-control'>
-                <option *ngFor="let category of categories" value="category.id">{{category.name}}</option>
+                <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
               </select>
   
               <div class="text-danger" *ngIf="entryForm.get('categoryId').invalid && entryForm.get('categoryId').touched">

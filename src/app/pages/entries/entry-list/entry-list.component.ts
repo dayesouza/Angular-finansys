@@ -15,7 +15,10 @@ export class EntryListComponent implements OnInit {
 
   ngOnInit() {
     this.entryService.getAll().subscribe(
-      entries => this.entries = entries,
+      // sort by date desc
+      entries => this.entries = entries.sort((a: Entry, b: Entry) => {
+        return +new Date(b.date) - +new Date(a.date);
+      }),
       error => alert('Error getting entries list.')
     );
   }

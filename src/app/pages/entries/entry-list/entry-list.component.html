@@ -41,7 +41,7 @@
         {{entry.category.name}}
       </td>
       <td>
-        <strong [class.text-danger]="entry.type =='expense'" [ngClass]="{'text-success': entry.type == 'revenue'}">
+        <strong [class.text-danger]="entry.type =='expense'" [class.text-success]="entry.type == 'revenue'">
           {{entry.amount}}
         </strong>
         <br>
