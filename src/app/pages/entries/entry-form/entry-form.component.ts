@@ -88,7 +88,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       description: [null],
       type: ['expense', [Validators.required]],
       amount: [null, [Validators.required]],
-      date: [null, [Validators.required]],
+      date: [new Date(), [Validators.required]],
       paid: [true, [Validators.required]],
       categoryId: [null, [Validators.required]]
     });
@@ -109,7 +109,6 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
     }
   }
 
-
   private setPageTitle() {
     if (this.currentAction === 'new') {
       this.pageTitle = 'Add new entry';
@@ -122,6 +121,8 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   private createEntry() {
     // Creating a new entry and assigning the form values
     const entry: Entry = Object.assign(new Entry(), this.entryForm.value);
+    console.log(entry);
+
     this.entryService.create(entry)
     .subscribe(
       new_entry => this.actionsFormSuccess(new_entry),

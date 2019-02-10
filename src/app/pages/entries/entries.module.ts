@@ -7,7 +7,7 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { IMaskModule } from 'angular-imask';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDateNativeAdapter, NgbDateAdapter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [EntryListComponent, EntryFormComponent],
@@ -18,6 +18,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     CalendarModule,
     IMaskModule,
     NgbDatepickerModule
-  ]
+  ],
+  providers: [{provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class EntriesModule { }

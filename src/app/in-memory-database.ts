@@ -15,9 +15,9 @@ export class InMemoryDatabase implements InMemoryDbService {
     ];
 
     const entries: Entry[] = [
-      new Entry(1, 'Crash Bandicoot', 'Sale on Steam', 'expense', '98.00', '12/12/2018', true,  categories[5].id, categories[5] ),
-      new Entry(2, 'Crash Bandicoot', 'Sale on Steam', 'expense', '98.00', '12/12/2018', false,  categories[5].id, categories[5] ),
-      new Entry(3, 'Fred pizzas', 'Pizza that I paid for', 'revenue', '12.00', '12/28/2018', true,  categories[6].id, categories[6] ),
+      new Entry(1, 'Crash Bandicoot', 'Sale on Steam', 'expense', '98.00', new Date(), true,  categories[5].id, categories[5] ),
+      new Entry(2, 'Crash Bandicoot', 'Sale on Steam', 'expense', '98.00', new Date(), false,  categories[5].id, categories[5] ),
+      new Entry(3, 'Fred pizzas', 'Pizza that I paid for', 'revenue', '12.00', new Date(), true,  categories[6].id, categories[6] ),
     ];
 
     return { categories, entries };
