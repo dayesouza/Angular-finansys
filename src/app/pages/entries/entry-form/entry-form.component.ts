@@ -102,6 +102,7 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
       ).subscribe(
         (entry) => {
           this.entry = entry;
+          this.entry.date = new Date(this.entry.date);
           this.entryForm.patchValue(this.entry); // Binds loaded entry data to entry form
         },
         (error) => alert('An error ocurred. Please try again later')

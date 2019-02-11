@@ -75,12 +75,14 @@
           <!-- Date -->
           <div class="form-group col-md-2">
               <label for='date'>Date</label>
-                  <div class="input-group">
 
-                  <input class="form-control" (click)="d.toggle()" formControlName="date"
-                        name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input type="text"
+                    placeholder="Datepicker"
+                    #dpMDY="bsDatepicker"
+                    class="form-control"
+                    formControlName='date'
+                    bsDatepicker>
 
-                </div>
               <div class="text-danger" *ngIf="entryForm.get('date').invalid && entryForm.get('date').touched">
                 <div *ngIf="entryForm.get('date').errors.required"> Mandatory field</div>
               </div>
