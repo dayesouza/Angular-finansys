@@ -1,67 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Category } from './category.model';
+import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryService {
+export class CategoryService extends BaseResourceService<Category> {
 
-  private apiPath = 'api/categories';
-
-  constructor(private http: HttpClient) { }
-
-  getAll(): Observable<Category[]> {
-    return this.http.get(this.apiPath).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToCategories)
-    );
-  }
-
-  getById(id: Number): Observable<Category> {
-    const url = this.apiPath + '/' + id;
-    return this.http.get(url).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToCategory)
-    );
-  }
-
-  create(category: Category): Observable<Category> {
-    return this.http.post(this.apiPath, category).pipe(
-      catchError(this.handleError), // Manipulate error
-      map(this.jsonDataToCategory) // Resolve data to json
-    );
-  }
-
-  update(category: Category): Observable<Category> {
-    const url = this.apiPath + '/' + category.id;
-    return this.http.put(url, category).pipe(// manipulate the return
-      catchError(this.handleError), // Manipulate error
-      map(() => category) // Return the same category
-    );
-  }
-
-  delete(id: Number): Observable<any> {
-    const url = this.apiPath + '/' + id;
-    return this.http.delete(url).pipe(
-      catchError(this.handleError),
-      map(() => null)
-    );
-  }
-
-  // PRIVATE METHODS
-
-  private jsonDataToCategories(jsonData: any[]): Category[] {
-      const categories: Category[] = [];
-      jsonData.forEach(element => categories.push(element as Category));
-      return categories;
-  }
-
-  private jsonDataToCategory(jsonData: any): Category {
-    return jsonData as Category;
-  }
-
-  private handleError(error: any): Observable<any> {
-    console.log('ERROR:', error);
-    return throwError(error);
+  constructor(protected injector: Injector) {
+    super('api/categories', injector);
   }
 }
