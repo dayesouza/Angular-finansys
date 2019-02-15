@@ -1,3 +1,89 @@
-<p>
-  reports works!
-</p>
+<app-bread-crumb
+  [items]="[{text: 'Reports'}]"
+>
+</app-bread-crumb>
+
+<app-page-header
+  page-title="Reports"
+  [show-button]="false"
+></app-page-header>
+
+<div class="card">
+  <div class="card-header">
+    Select the desired month
+</div>
+    
+
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-7">
+          <label for="month">Month</label>
+          <select #month name="month" id="month" class="form-control">
+            <option value="">Select a month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+
+          </select>
+        </div>
+
+        <div class="form-group col-md-5">
+          <label for="year">Year</label>
+          <!-- Make it dynamic-->
+          <select #year name="year" id="year" class="form-control">
+            <option value="">Select a year</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md">
+          <button type="button" (click)="generateReports()" class="btn btn-primary float-right"> 
+            Generate reports
+           </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="card-deck mt-5 mb-5">
+  <div class="card text-center text-white bg-success">
+    <div class="card-header">
+      Revenue total
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">1500</h3>
+    </div>
+  </div>
+
+  <div class="card text-center text-white bg-danger">
+    <div class="card-header">
+      Expense total
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">500</h3>
+    </div>
+  </div>
+
+  <div class="card text-center text-white bg-info">
+    <div class="card-header">
+      Balance 
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">500</h3>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row mt-5 mb-4">
+  <div class="col-md-6">
+    Revenue graph
+  </div>
+  <div class="col-md-6">
+    Expense graph
+  </div>
+</div>
