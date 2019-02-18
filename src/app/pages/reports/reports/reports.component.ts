@@ -66,31 +66,39 @@ export class ReportsComponent implements OnInit {
 
     this.entries.forEach(entry => {
       if (entry.type === 'revenue') {
-        revenueTotal += currencyFormatter.unformat(entry.amount);
+        revenueTotal += +entry.amount;
       }
       else {
-        expenseTotal += currencyFormatter.unformat(entry.amount);
+        expenseTotal += +entry.amount;
       }
     });
 
-    this.expenseTotal = currencyFormatter.format(expenseTotal);
-    this.revenueTotal = currencyFormatter.format(revenueTotal);
+    this.expenseTotal = +expenseTotal;
+    this.revenueTotal = +revenueTotal;
 
-    this.balance = currencyFormatter.format(revenueTotal = expenseTotal);
+    this.balance = revenueTotal - expenseTotal;
+    console.log(this.entries);
+    console.log(this.revenueTotal);
+    console.log(this.balance);
   }
 
   private setChartData() {
+    this.revenueChartData = this.getChartData('revenue', 'Revenue graph', '#9CCC65');
+    this.expenseChartData = this.getChartData('expense', 'Expense graph', '#e03131');
+  }
+
+  private getChartData(entryType: string, title: string, color: string) {
     const chartData = [];
     this.categories.forEach(category => {
       const filteredEntries = this.entries.filter (
         entry => (entry.categoryId === category.id)
-        && (entry.type === 'revenue')
+        && (entry.type === entryType)
       );
 
       // If found, show on the graph
       if (filteredEntries.length > 0) {
         const totalAmount = filteredEntries.reduce(
-          (total, entry) => total + currencyFormatter.unformat(entry.amount), 0
+          (total, entry) => total + +entry.amount, 0
         );
 
         chartData.push({
@@ -101,11 +109,11 @@ export class ReportsComponent implements OnInit {
 
     });
 
-    this.revenueChartData = {
+    return {
       labels: chartData.map(item => item.categoryName),
       datasets: [{
-        label: 'Revenues',
-        backgroundColor: '#9CCC65',
+        label: title,
+        backgroundColor: color,
         data: chartData.map(item => item.totalAmount)
       }]
     };
