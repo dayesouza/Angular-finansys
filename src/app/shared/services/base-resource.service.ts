@@ -3,24 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injector } from '@angular/core';
-
-
+import { AngularFireDatabase } from '@angular/fire/database';
 
 export abstract class BaseResourceService <T extends BaseResourceModel> {
 
   protected http: HttpClient;
+  protected db: AngularFireDatabase;
+  apiPath = '';
 
-  constructor(protected apiPath: string,
+  constructor(protected baseName: string,
     protected injector: Injector,
     protected jsonDataToResourceFN: (jsonData) => T) {
     this.http = injector.get(HttpClient);
+    this.db = injector.get(AngularFireDatabase);
   }
 
   getAll(): Observable<T[]> {
-    return this.http.get(this.apiPath).pipe(
+    return this.db.list(this.baseName).valueChanges().pipe(
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError)
-      );
+    );
   }
 
   getById(id: Number): Observable<T> {
@@ -57,6 +59,7 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
   // Protected
   protected jsonDataToResources(jsonData: any[]): T[] {
     const resources: T[] = [];
+    console.log(jsonData);
     jsonData.forEach(element => resources.push(this.jsonDataToResourceFN(element)));
     return resources;
   }
