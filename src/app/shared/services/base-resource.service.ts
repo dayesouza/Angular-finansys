@@ -8,7 +8,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 export abstract class BaseResourceService <T extends BaseResourceModel> {
 
   protected http: HttpClient;
-  protected db: AngularFirestore;
+  protected firestore: AngularFirestore;
   apiPath = '';
   collection: AngularFirestoreCollection;
 
@@ -16,13 +16,15 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
     protected injector: Injector,
     protected jsonDataToResourceFN: (jsonData) => T) {
     this.http = injector.get(HttpClient);
-    this.db = injector.get(AngularFirestore);
+    this.firestore = injector.get(AngularFirestore);
+  }
 
-    this.collection = this.db.collection(this.baseName);
+  private returnCollection(_query_?): AngularFirestoreCollection<T> {
+    return this.firestore.collection(this.baseName, _query_);
   }
 
   getAll(): Observable<T[]> {
-    return this.collection.valueChanges().pipe(
+    return this.returnCollection().valueChanges().pipe(
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError)
     );
@@ -30,7 +32,7 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
 
   getById(id: Number): Observable<T> {
     const url = this.apiPath + '/' + id;
-    return this.db.collection(this.baseName, ref => ref.where('id', '==', id)).valueChanges().pipe(
+    return this.firestore.collection(this.baseName, ref => ref.where('id', '==', id)).valueChanges().pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError)
     );
