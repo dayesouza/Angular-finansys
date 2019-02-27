@@ -3,23 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injector } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 export abstract class BaseResourceService <T extends BaseResourceModel> {
 
   protected http: HttpClient;
-  protected db: AngularFireDatabase;
+  protected db: AngularFirestore;
   apiPath = '';
+  collection: AngularFirestoreCollection;
 
   constructor(protected baseName: string,
     protected injector: Injector,
     protected jsonDataToResourceFN: (jsonData) => T) {
     this.http = injector.get(HttpClient);
-    this.db = injector.get(AngularFireDatabase);
+    this.db = injector.get(AngularFirestore);
+
+    this.collection = this.db.collection(this.baseName);
   }
 
   getAll(): Observable<T[]> {
-    return this.db.list(this.baseName).valueChanges().pipe(
+    return this.collection.valueChanges().pipe(
       map(this.jsonDataToResources.bind(this)),
       catchError(this.handleError)
     );
@@ -27,7 +30,7 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
 
   getById(id: Number): Observable<T> {
     const url = this.apiPath + '/' + id;
-    return this.http.get(url).pipe(
+    return this.db.collection(this.baseName, ref => ref.where('id', '==', id)).valueChanges().pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError)
     );

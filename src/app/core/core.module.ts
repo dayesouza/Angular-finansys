@@ -1,3 +1,4 @@
+import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,6 +9,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDatabase } from '../in-memory-database';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 
 
 @NgModule({
@@ -18,6 +21,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
+    AngularFireDatabaseModule,
     // HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
   ],
   exports: [// shared modules
@@ -25,6 +29,10 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     HttpClientModule,
     NavbarComponent
+  ],
+  providers: [
+    AngularFireDatabase,
+    AngularFirestore
   ]
 })
 export class CoreModule { }

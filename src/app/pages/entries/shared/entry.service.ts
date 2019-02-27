@@ -15,7 +15,7 @@ export class EntryService extends BaseResourceService<Entry> {
     super('entries', injector, Entry.fromJson);
   }
 
-  create(entry: Entry): Observable<Entry> {
+  create(entry: Entry) {
     return this.setCategoryAndSendToServer(entry, super.create.bind(this));
   }
 
