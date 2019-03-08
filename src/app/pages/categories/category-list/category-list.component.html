@@ -27,7 +27,7 @@ button-class="btn-success"
         <small>{{category.description}}</small>
       </td>
       <td>
-        <a [routerLink]="[category.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Edit</a>
+        <a [routerLink]="['edit', category.id]" class="btn btn-outline-info btn-sm mr-2">Edit</a>
         <button (click)="deleteResource(category)" class="btn btn-outline-danger btn-sm">Remove</button>
       </td>
     </tr>

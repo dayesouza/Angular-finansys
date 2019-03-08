@@ -16,11 +16,11 @@ export class EntryService extends BaseResourceService<Entry> {
   }
 
   create(entry: Entry) {
-    return this.setCategoryAndSendToServer(entry, super.create.bind(this));
+    return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
   }
 
   update(entry: Entry): Observable<Entry> {
-    return this.setCategoryAndSendToServer(entry, super.update.bind(this));
+    return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
   }
 
   getByMonthAndYear(month: number, year: number): Observable<Entry[]> {

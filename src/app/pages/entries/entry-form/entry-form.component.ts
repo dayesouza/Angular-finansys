@@ -66,9 +66,10 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
 
   protected loadResource() {
     if (this.currentAction === 'edit') {
+
       // return the edited resource
       this.route.paramMap.pipe(// The + transforms into a number
-        switchMap(params => this.resourceService.getById(+params.get('id')))
+        switchMap(params => this.resourceService.getById(params.get('id')))
       )
       .subscribe(
         (resource) => {

@@ -45,12 +45,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
   submitForm() {
     this.submittingForm = true;
-
-    if (this.currentAction === 'new') {
-      this.createResource();
-    } else { // editing
-      this.updateResource();
-    }
+    this.persistResource();
   }
 
   // Protected methods
@@ -66,7 +61,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     if (this.currentAction === 'edit') {
       // return the edited resource
       this.route.paramMap.pipe(// The + transforms into a number
-        switchMap(params => this.resourceService.getById(+params.get('id')))
+        switchMap(params => this.resourceService.getById(params.get('id')))
       )
       .subscribe(
         (resource) => {
@@ -95,25 +90,27 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     return 'Edit';
   }
 
-  protected createResource() {
-    // Creating a new category and assigning the form values
+  protected persistResource() {
+    // Creating a new resource and assigning the form values
+    let new_resource;
+    let error;
     const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
-    this.resourceService.create(resource)
-    .subscribe(
-      new_resource => this.actionsFormSuccess(new_resource),
-      error => this.actionsForError(error)
+    this.resourceService.persistDocument(resource)
+    .then(
+      () => new_resource = this.actionsFormSuccess(new_resource),
+      () => error = this.actionsForError(error)
     );
   }
 
-  protected updateResource() {
-    const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
+  // protected updateResource() {
+  //   const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
 
-    this.resourceService.update(resource)
-    .subscribe(
-      new_resource => this.actionsFormSuccess(new_resource),
-      error => this.actionsForError(error)
-    );
-  }
+  //   this.resourceService.update(resource)
+  //   .subscribe(
+  //     new_resource => this.actionsFormSuccess(new_resource),
+  //     error => this.actionsForError(error)
+  //   );
+  // }
 
   protected actionsFormSuccess(resource: T) {
     toastr.success('Success!');

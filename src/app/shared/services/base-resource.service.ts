@@ -30,9 +30,9 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
     );
   }
 
-  getById(id: Number): Observable<T> {
-    const url = this.apiPath + '/' + id;
-    return this.firestore.collection(this.baseName, ref => ref.where('id', '==', id)).valueChanges().pipe(
+  getById(id: string): Observable<T> {
+    console.log(id);
+    return this.firestore.collection(this.baseName).doc(id).valueChanges().pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError)
     );
@@ -45,6 +45,18 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
     );
   }
 
+  persistDocument(_document_) {
+    let _id: any;
+    if (_document_.id) {
+      _id = _document_.id;
+    } else {
+      _id = this.firestore.createId();
+      _document_.id = _id;
+    }
+
+    return this.firestore.doc(this.baseName + '/' + _id).set(Object.assign({}, _document_));
+  }
+
   update(resource: T): Observable<T> {
     const url = this.apiPath + '/' + resource.id;
     return this.http.put(url, resource).pipe(// manipulate the return
@@ -53,12 +65,8 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
     );
   }
 
-  delete(id: Number): Observable<any> {
-    const url = this.apiPath + '/' + id;
-    return this.http.delete(url).pipe(
-      map(() => null),
-      catchError(this.handleError)
-    );
+  delete(id: string): Promise<any> {
+    return this.firestore.collection(this.baseName).doc(id).delete();
   }
 
   // Protected

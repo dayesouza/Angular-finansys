@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {path: '', component: CategoryListComponent},
   {path: 'new', component: CategoryFormComponent},
-  {path: ':id/edit', component: CategoryFormComponent},
+  {path: 'edit/:id', component: CategoryFormComponent},
 ];
 
 @NgModule({
