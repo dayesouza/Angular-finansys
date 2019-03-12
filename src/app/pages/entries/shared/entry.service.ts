@@ -19,9 +19,9 @@ export class EntryService extends BaseResourceService<Entry> {
     return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
   }
 
-  update(entry: Entry): Observable<Entry> {
-    return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
-  }
+  // update(entry: Entry): Observable<Entry> {
+  //   return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
+  // }
 
   getByMonthAndYear(month: number, year: number): Observable<Entry[]> {
     return this.getAll().pipe(// Send to server already with year and month
@@ -41,13 +41,12 @@ export class EntryService extends BaseResourceService<Entry> {
     });
   }
 
-  private setCategoryAndSendToServer(entry: Entry, sendFn: any): Observable<Entry> {
-    return this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
-        entry.category = category;
+  private setCategoryAndSendToServer(entry: Entry, sendFn: any) {
+    return this.categoryService.getById(entry.categoryId).subscribe(
+      (category) => {
+        entry.category = Object.assign({}, category);
         return sendFn(entry);
       }),
-      catchError(this.handleError)
-    );
+      catchError(this.handleError);
   }
 }

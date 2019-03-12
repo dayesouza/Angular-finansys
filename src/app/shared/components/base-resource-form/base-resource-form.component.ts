@@ -95,8 +95,8 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     let new_resource;
     let error;
     const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
-    this.resourceService.persistDocument(resource)
-    .then(
+    console.log("ue");
+    this.resourceService.persistDocument(resource).then(
       () => new_resource = this.actionsFormSuccess(new_resource),
       () => error = this.actionsForError(error)
     );
@@ -126,7 +126,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
   protected actionsForError(error) {
     toastr.error('Oh sorry! An error ocurred.');
-
     this.submittingForm = false;
 
     if (error.status === 422) {

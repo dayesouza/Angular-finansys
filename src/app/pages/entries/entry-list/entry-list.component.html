@@ -40,7 +40,7 @@ button-class="btn-success"
         <span class="badge" [class.badge-warning]="entry.paidText == 'Pending'" [class.badge-success]="entry.paidText == 'Paid'">{{entry.paidText}}</span>
       </td>
       <td>
-        <a [routerLink]="[entry.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Edit</a>
+        <a [routerLink]="['edit', entry.id]" class="btn btn-outline-info btn-sm mr-2">Edit</a>
         <button (click)="deleteResource(entry)" class="btn btn-outline-danger btn-sm">Remove</button>
       </td>
     </tr>

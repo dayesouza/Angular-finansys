@@ -31,17 +31,9 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
   }
 
   getById(id: string): Observable<T> {
-    console.log(id);
     return this.firestore.collection(this.baseName).doc(id).valueChanges().pipe(
       map(this.jsonDataToResource.bind(this)),
       catchError(this.handleError)
-    );
-  }
-
-  create(resource: T): Observable<T> {
-    return this.http.post(this.apiPath, resource).pipe(
-      map(this.jsonDataToResource.bind(this)), // Resolve data to json
-      catchError(this.handleError) // Manipulate error
     );
   }
 
@@ -54,7 +46,7 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
       _document_.id = _id;
     }
 
-    return this.firestore.doc(this.baseName + '/' + _id).set(Object.assign({}, _document_));
+    return this.firestore.collection(this.baseName).doc(_id).set(Object.assign({}, _document_));
   }
 
   update(resource: T): Observable<T> {

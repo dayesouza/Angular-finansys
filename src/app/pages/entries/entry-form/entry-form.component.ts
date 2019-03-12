@@ -51,6 +51,11 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
     );
   }
 
+  submit() {
+    this.submittingForm = true;
+    this.entryService.create(this.resourceForm.value);
+  }
+
   protected buildResourceForm() {
     this.resourceForm = this.formBuilder.group({
       id: [null],
