@@ -79,7 +79,7 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
       .subscribe(
         (resource) => {
           this.resource = resource;
-          this.resource.date = new Date(this.resource.date);
+          this.resource.date = new Date(this.resource.date['seconds']  * 1000);
           this.resourceForm.patchValue(this.resource); // Binds loaded category data to resource form
         },
         (error) => alert('An error ocurred. Please try again later')

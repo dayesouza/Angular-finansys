@@ -65,6 +65,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
       )
       .subscribe(
         (resource) => {
+          console.log(resource);
           this.resource = resource;
           this.resourceForm.patchValue(this.resource); // Binds loaded category data to resource form
         },
@@ -95,7 +96,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     let new_resource;
     let error;
     const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
-    console.log("ue");
     this.resourceService.persistDocument(resource).then(
       () => new_resource = this.actionsFormSuccess(new_resource),
       () => error = this.actionsForError(error)
@@ -116,7 +116,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     toastr.success('Success!');
 
     const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
-
     // (skipLocationChange) Do not add to navegation history
     // this.router.navigateByUrl(baseComponentPath, {skipLocationChange: true}).then(
     //  () => this.router.navigate([baseComponentPath, resource.id, 'edit'])
