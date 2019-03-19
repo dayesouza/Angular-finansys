@@ -12,7 +12,7 @@ import { CardsRoutingModule } from './cards-routing.module';
   ],
   imports: [
     CardsRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class CardsModule { }

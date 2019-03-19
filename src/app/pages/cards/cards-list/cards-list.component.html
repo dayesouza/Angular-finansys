@@ -21,14 +21,14 @@ button-class="btn-success"
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let category of resources">
-      <td>
-        <strong>{{category.name}} </strong><br>
-        <small>{{category.description}}</small>
+    <tr *ngFor="let card of resources">
+      <td class="card-info">
+        <strong>{{card.name}} ({{card.finalNumber}})</strong><br>
+        <i [class]="card.brand | brandCardIcon"></i> <small>Due day: {{card.dueDay}}</small>
       </td>
       <td>
-        <a [routerLink]="['edit', category.id]" class="btn btn-outline-info btn-sm mr-2">Edit</a>
-        <button (click)="deleteResource(category)" class="btn btn-outline-danger btn-sm">Remove</button>
+        <a [routerLink]="['edit', card.id]" class="btn btn-outline-info btn-sm mr-2">Edit</a>
+        <button (click)="deleteResource(card)" class="btn btn-outline-danger btn-sm">Remove</button>
       </td>
     </tr>
   </tbody>

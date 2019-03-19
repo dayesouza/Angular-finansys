@@ -1,3 +1,5 @@
+import { Card } from './../../cards/shared/cards.model';
+import { CardsService } from './../../cards/shared/cards.service';
 import { EntryService } from './../shared/entry.service';
 import { Entry } from './../shared/entry.model';
 import { Component, Injector, OnInit} from '@angular/core';
@@ -17,6 +19,7 @@ import { switchMap } from 'rxjs/operators';
 export class EntryFormComponent extends BaseResourceFormComponent<Entry> implements OnInit {
 
   categories: Array<Category>;
+  cards: Array<Card>;
 
   imaskConfig = {
     mask: Number,
@@ -30,6 +33,7 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
   constructor(
     protected entryService: EntryService,
     protected categoryService: CategoryService,
+    protected cardsService: CardsService,
     protected injector: Injector
     ) {
       super(injector, new Entry(), entryService, Entry.fromJson);
@@ -37,6 +41,7 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
 
   ngOnInit() {
     this.loadCategories();
+    this.loadCards();
     super.ngOnInit();
   }
 
@@ -90,6 +95,12 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
   protected loadCategories() {
     this.categoryService.getAll().subscribe(
       categories => this.categories = categories
+    );
+  }
+
+  protected loadCards() {
+    this.cardsService.getAll().subscribe(
+      cards => this.cards = cards
     );
   }
 

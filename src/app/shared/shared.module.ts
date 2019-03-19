@@ -1,3 +1,4 @@
+import { PipesModule } from './pipes/pipes.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,12 +13,13 @@ import { ServerErrorMessagesComponent } from './components/server-error-messages
     BreadCrumbComponent,
     PageHeaderComponent,
     FormFieldErrorComponent,
-    ServerErrorMessagesComponent
+    ServerErrorMessagesComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    PipesModule
   ],
   exports: [
     // shared modules
@@ -28,7 +30,8 @@ import { ServerErrorMessagesComponent } from './components/server-error-messages
     BreadCrumbComponent,
     PageHeaderComponent,
     FormFieldErrorComponent,
-    ServerErrorMessagesComponent
+    ServerErrorMessagesComponent,
+    PipesModule
   ]
 })
 export class SharedModule { }
