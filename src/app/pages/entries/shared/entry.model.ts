@@ -1,3 +1,4 @@
+import { Card } from './../../cards/shared/cards.model';
 import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
 import { Category } from '../../categories/shared/category.model';
 
@@ -11,7 +12,9 @@ export class Entry extends BaseResourceModel {
     public date?: Date,
     public paid?: boolean,
     public categoryId?: string,
-    public category?: Category
+    public category?: Category,
+    public cardId?: string,
+    public card?: Card
   ) {
     super();
   }

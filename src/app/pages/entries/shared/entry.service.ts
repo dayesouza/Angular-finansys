@@ -1,3 +1,4 @@
+import { CardsService } from './../../cards/shared/cards.service';
 import { flatMap, catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
@@ -11,7 +12,7 @@ import * as moment from 'moment';
 })
 export class EntryService extends BaseResourceService<Entry> {
 
-  constructor(protected injector: Injector, private categoryService: CategoryService) {
+  constructor(protected injector: Injector, private categoryService: CategoryService, private cardService: CardsService) {
     super('entries', injector, Entry.fromJson);
   }
 
@@ -45,7 +46,13 @@ export class EntryService extends BaseResourceService<Entry> {
     return this.categoryService.getById(entry.categoryId).subscribe(
       (category) => {
         entry.category = Object.assign({}, category);
-        return sendFn(entry);
+        entry.categoryId = '';
+        return this.cardService.getById(entry.cardId).subscribe(
+          (card) => {
+            entry.card = Object.assign({}, card);
+            entry.cardId = '';
+            return sendFn(entry);
+          });
       }),
       catchError(this.handleError);
   }

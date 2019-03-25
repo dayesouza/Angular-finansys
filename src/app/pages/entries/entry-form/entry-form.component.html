@@ -99,13 +99,24 @@ button-class="btn-light"
               <app-form-field-error [form-control]="resourceForm.get('categoryId')"></app-form-field-error>
             </div>
 
-            <!-- Description-->
+
+            <div class="form-group col-md-3">
+              <label for='type'>Card</label>
+  
+              <select name="cardId" id="type" formControlName="cardId" class='form-control'>
+                <option *ngFor="let card of cards" value="{{card.id}}">{{card.name}}</option>
+              </select>
+  
+              <app-form-field-error [form-control]="resourceForm.get('categoryId')"></app-form-field-error>
+            </div>
+      </div>
+
+      <div class="form-row">
+          <!-- Description-->
           <div class="form-group col-md-7">
             <label for='description'>Description</label>
             <input type="text" class="form-control" id='description' formControlName='description'> 
           </div>
-
-
       </div>
     </div>
   </div>

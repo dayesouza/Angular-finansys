@@ -70,7 +70,8 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
       amount: [null, [Validators.required]],
       date: [new Date(), [Validators.required]],
       paid: [true, [Validators.required]],
-      categoryId: [null, [Validators.required]]
+      categoryId: [null, [Validators.required]],
+      cardId: [null, [Validators.required]]
     });
   }
 
@@ -86,6 +87,8 @@ export class EntryFormComponent extends BaseResourceFormComponent<Entry> impleme
           this.resource = resource;
           this.resource.date = new Date(this.resource.date['seconds']  * 1000);
           this.resourceForm.patchValue(this.resource); // Binds loaded category data to resource form
+          this.resourceForm.controls['cardId'].setValue(this.resource.card.id);
+          this.resourceForm.controls['categoryId'].setValue(this.resource.category.id);
         },
         (error) => alert('An error ocurred. Please try again later')
       );
