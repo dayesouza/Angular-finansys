@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, FooterComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -27,7 +28,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   providers: [
     AngularFireDatabase,
