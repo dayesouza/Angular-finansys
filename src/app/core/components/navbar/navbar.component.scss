@@ -1,0 +1,21 @@
+@import "../../../../theme/colors.scss";
+
+.nav-item button.btn_title{
+    color: map_get($colors, white);
+}
+.nav-item .dropdown-item:hover {
+  background-color: #b7bbbf66;
+}
+.user-info {
+  border-left: 1px solid white;
+
+  img {
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid;
+    border-color: map_get($colors, grey);
+    padding: 3px;
+    width: 29px;
+  }
+}
+

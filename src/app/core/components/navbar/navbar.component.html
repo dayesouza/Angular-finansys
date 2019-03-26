@@ -17,13 +17,32 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/cards">Cards</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/events">Events</a>
+    </ul>
+
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+      <li class="nav-item">
+        <div ngbDropdown>
+          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>Events</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a *ngFor="let event of events" [href]="event.name" class="dropdown-item" ngbDropdownItem>{{event.name}}</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="/events/new">+ New event</a>
+          </div>
+        </div>
       </li>
 
-      <!-- <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li> -->
+      <li class="nav-item user-info">
+          <div ngbDropdown>
+              <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>
+                  <img src="../../../../assets/img/question-mark.png" alt="user img" class="mr-2">dayenne.souza
+                </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a class="dropdown-item" ngbDropdownItem>Meu perfil</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" ngbDropdownItem>Sair</a>
+              </div>
+            </div>
+      </li>
     </ul>
   </div>
 </nav>

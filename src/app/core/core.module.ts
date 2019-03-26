@@ -1,3 +1,5 @@
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { PreferencesService } from './../shared/services/preferences/preferences.service';
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,10 +13,13 @@ import { RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FooterComponent } from './components/footer/footer.component';
 
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent],
+  declarations: [
+    NavbarComponent,
+    FooterComponent
+  ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -22,6 +27,7 @@ import { FooterComponent } from './components/footer/footer.component';
     HttpClientModule,
     RouterModule,
     AngularFireDatabaseModule,
+    NgbModule
     // HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
   ],
   exports: [// shared modules
@@ -29,11 +35,14 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserAnimationsModule,
     HttpClientModule,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    NgbModule
   ],
   providers: [
     AngularFireDatabase,
-    AngularFirestore
+    AngularFirestore,
+    PreferencesService,
+    LocalStorageService
   ]
 })
 export class CoreModule { }

@@ -10,4 +10,8 @@ export class EventsService extends BaseResourceService<Events> {
   constructor(protected injector: Injector) {
     super('events', injector, Events.fromJson);
   }
+
+  eventChosen() {
+    return '';
+  }
 }

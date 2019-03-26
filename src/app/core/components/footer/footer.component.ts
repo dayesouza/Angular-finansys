@@ -1,6 +1,4 @@
-import { EventsService } from './../../../pages/events/shared/events.service';
 import { Component, OnInit } from '@angular/core';
-import { Events } from 'src/app/pages/events/shared/events.model';
 
 @Component({
   selector: 'app-footer',
@@ -9,13 +7,10 @@ import { Events } from 'src/app/pages/events/shared/events.model';
 })
 export class FooterComponent implements OnInit {
 
-  events: Array<Events>;
-  constructor(private eventsService: EventsService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.eventsService.getAll().subscribe(
-      (events) => this.events = events
-    );
+
   }
 
 }
