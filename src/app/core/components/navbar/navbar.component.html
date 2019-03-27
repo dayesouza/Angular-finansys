@@ -22,9 +22,9 @@
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
       <li class="nav-item">
         <div ngbDropdown>
-          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>Events</button>
+          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>{{preferences?.event.name || 'Chose event'}}</button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <a *ngFor="let event of events" [href]="event.name" class="dropdown-item" ngbDropdownItem>{{event.name}}</a>
+            <span *ngFor="let event of events" (click)="changeEvent(event)" class="dropdown-item" ngbDropdownItem>{{event.name}}</span>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" routerLink="/events/new">+ New event</a>
           </div>

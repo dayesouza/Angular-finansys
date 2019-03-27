@@ -1,32 +1,28 @@
 import { map } from 'rxjs/operators';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 
 @Injectable()
-export class LocalStorageService {
+export abstract class LocalStorageService {
 
-  constructor(protected localStorage: LocalStorage) {
+  private localStorage: LocalStorage;
+  private itemName: string;
+
+  constructor(protected injector: Injector, _itemName: string) {
+    this.localStorage = this.injector.get(LocalStorage);
+    this.itemName = _itemName;
   }
 
-  persistData(itemName: string, item: any) {
-    this.localStorage.setItem(itemName, item).subscribe(() => {});
+  persistData(item: any) {
+    this.localStorage.setItem(this.itemName, item).subscribe(() => {});
   }
 
-  deleteData(itemName: string) {
-    this.localStorage.removeItem(itemName).subscribe(() => {});
+  deleteData() {
+    this.localStorage.removeItem(this.itemName).subscribe(() => {});
   }
 
-  getData(itemName: string) {
-    return this.localStorage.getItem(itemName).pipe(
-      map(res => {
-        return res;
-      })
-    )
-    
-    
-    // ((data) => {
-    //   return data;
-    // });
+  getData() {
+    return this.localStorage.getItem(this.itemName);
   }
 
   wipeData() {

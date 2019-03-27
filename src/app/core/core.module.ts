@@ -1,4 +1,5 @@
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { AuthGuard } from './../security/guard/auth.guard';
+import { AuthService } from './../security/service/auth.service';
 import { PreferencesService } from './../shared/services/preferences/preferences.service';
 import { AngularFireDatabase, AngularFireDatabaseModule } from '@angular/fire/database';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -27,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     RouterModule,
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     NgbModule
     // HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
   ],
@@ -42,7 +45,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireDatabase,
     AngularFirestore,
     PreferencesService,
-    LocalStorageService
+    AuthService,
+    AuthGuard
   ]
 })
 export class CoreModule { }

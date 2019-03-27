@@ -19,17 +19,28 @@ export class NavbarComponent implements OnInit {
     this.eventsService.getAll().subscribe(
       (events) => {
         this.events = events;
-        const pref = new Preferences();
-        pref.id = '5';
-        pref.idUser = '5';
-        pref.lastChosenEvent = this.events[0];
-
-        this.preferencesService.returnData();
+        this.getPreferences();
       }
     );
+  }
 
+  getPreferences() {
+    this.preferencesService.getData().subscribe(
+      (data) => {
+        if (data) {
+          this.preferences = data;
+        }
+      }
+    );
+  }
 
-
+  changeEvent(event) {
+    const pref = new Preferences();
+    pref.id = '5';
+    pref.idUser = '5';
+    pref.event = event;
+    this.preferencesService.persistData(pref);
+    this.getPreferences();
   }
 
 }
