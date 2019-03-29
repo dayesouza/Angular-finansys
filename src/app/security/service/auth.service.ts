@@ -22,9 +22,9 @@ export class AuthService {
       this.user = this.afAuth.authState.pipe(
         switchMap(user => {
           if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
           } else {
-            return of(null)
+            return of(null);
           }
         })
       )
@@ -38,8 +38,9 @@ export class AuthService {
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-        this.updateUserData(credential.user)
-      })
+        console.log(credential);
+        this.updateUserData(credential.user);
+      });
   }
 
 

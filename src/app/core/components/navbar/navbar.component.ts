@@ -1,3 +1,4 @@
+import { AuthService } from './../../../security/service/auth.service';
 import { PreferencesService } from './../../../shared/services/preferences/preferences.service';
 import { Events } from './../../../pages/events/shared/events.model';
 import { EventsService } from './../../../pages/events/shared/events.service';
@@ -13,7 +14,8 @@ export class NavbarComponent implements OnInit {
 
   events: Array<Events>;
   preferences: Preferences;
-  constructor(private eventsService: EventsService, private preferencesService: PreferencesService) { }
+  constructor(private eventsService: EventsService, private preferencesService: PreferencesService,
+    private auth: AuthService) { }
 
   ngOnInit() {
     this.eventsService.getAll().subscribe(
