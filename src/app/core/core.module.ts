@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// import { InMemoryDatabase } from '../in-memory-database';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -31,7 +30,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule
-    // HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
   ],
   exports: [// shared modules
     BrowserModule,
