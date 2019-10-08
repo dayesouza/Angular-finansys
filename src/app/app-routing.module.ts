@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'cards', loadChildren: './pages/cards/cards.module#CardsModule'},
   { path: 'events', loadChildren: './pages/events/events.module#EventsModule'},
   { path: 'login', loadChildren: './security/security.module#SecurityModule'},
-  { path: '', redirectTo: 'reports', pathMatch: 'full' }
+  { path: '', redirectTo: 'reports', pathMatch: 'full' },
+  { path: '**', redirectTo: 'reports', pathMatch: 'full' }
 ];
 
 @NgModule({
