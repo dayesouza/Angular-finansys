@@ -10,4 +10,6 @@ export class CardsService extends BaseResourceService<Card> {
   constructor(protected injector: Injector) {
     super('cards', injector, Card.fromJson);
   }
+
+  
 }

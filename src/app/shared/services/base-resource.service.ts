@@ -11,7 +11,9 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
   protected firestore: AngularFirestore;
   apiPath = '';
   collection: AngularFirestoreCollection;
+  protected userId = '6d1V2r9GztXiiX9KpHaFrHAhpHP2';
 
+  // '6d1V2r9GztXiiX9KpHaFrHAhpHP2'
   constructor(protected baseName: string,
     protected injector: Injector,
     protected jsonDataToResourceFN: (jsonData) => T) {
@@ -20,7 +22,7 @@ export abstract class BaseResourceService <T extends BaseResourceModel> {
   }
 
   private returnCollection(_query_?): AngularFirestoreCollection<T> {
-    return this.firestore.collection(this.baseName, _query_);
+    return this.firestore.collection(this.baseName, afs => afs.where(`users.${this.userId}`, '==', 'true'));
   }
 
   getAll(): Observable<T[]> {
