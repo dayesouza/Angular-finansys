@@ -3,14 +3,16 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from "@angular/fire/firestore";
+import { Observable, of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { IUser } from "src/app/security/model/IUser";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { switchMap } from "rxjs/operators";
 import { auth } from "firebase";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  private userDetails: firebase.User = null;
+  user: Observable<IUser>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -18,17 +20,15 @@ export class AuthService {
     private router: Router
   ) {
     //// Get auth data, then get firestore user document || null
-    this.afAuth.onAuthStateChanged((user) => {
-      if (user) {
-        this.userDetails = user;
-        localStorage.setItem("user", JSON.stringify(user));
-        JSON.parse(localStorage.getItem("user"));
-      } else {
-        this.userDetails = null;
-        localStorage.setItem("user", null);
-        JSON.parse(localStorage.getItem("user"));
-      }
-    });
+    this.user = this.afAuth.authState.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   googleLogin() {
@@ -38,12 +38,9 @@ export class AuthService {
     );
   }
 
-  returnUser() {
-    return this.userDetails;
-  }
-
   private oAuthLogin(provider) {
-    return this.afAuth.signInWithPopup(provider).then((credential) => {
+    return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
+      console.log(credential);
       this.updateUserData(credential.user);
     });
   }
@@ -60,13 +57,11 @@ export class AuthService {
       photoURL: user.photoURL,
     };
 
-    localStorage.setItem("user", JSON.stringify(data));
     return userRef.set(data, { merge: true });
   }
 
   signOut() {
-    this.afAuth.signOut().then(() => {
-      localStorage.removeItem("user");
+    this.afAuth.auth.signOut().then(() => {
       this.router.navigate(["/"]);
     });
   }

@@ -29,10 +29,10 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   private returnCollection(_query_?): AngularFirestoreCollection<T> {
-    console.log("user", this.userService.returnUser());
-    return this.firestore.collection(this.baseName, (afs) =>
-      afs.where(`users.${this.userId}`, "==", "true")
-    );
+    return this.firestore.collection(this.baseName);
+    // return this.firestore.collection(this.baseName, (afs) =>
+    // afs.where(`users.${this.userId}`, "==", "true")
+    // );
   }
 
   getAll(): Observable<T[]> {
