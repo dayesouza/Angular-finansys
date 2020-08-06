@@ -1,9 +1,9 @@
-import { Card } from './../../cards/shared/cards.model';
-import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
-import { Category } from '../../categories/shared/category.model';
+import { Card } from "./../../cards/shared/cards.model";
+import { Category } from "../../categories/shared/category.model";
+import { BaseResourceModel } from "../../../shared/models/base-resource.model";
 
 export class Entry extends BaseResourceModel {
-  constructor (
+  constructor(
     public id?: string,
     public name?: String,
     public description?: string,
@@ -20,8 +20,8 @@ export class Entry extends BaseResourceModel {
   }
 
   static types = {
-    expense: 'Expense',
-    revenue: 'Revenue'
+    expense: "Expense",
+    revenue: "Revenue",
   };
 
   static fromJson(jsonData: any): Entry {
@@ -29,6 +29,6 @@ export class Entry extends BaseResourceModel {
   }
 
   get paidText(): string {
-    return this.paid ? 'Paid' : 'Pending';
+    return this.paid ? "Paid" : "Pending";
   }
 }

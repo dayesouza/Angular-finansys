@@ -3,7 +3,7 @@ import { PreferencesService } from "./../../../shared/services/preferences/prefe
 import { Events } from "./../../../pages/events/shared/events.model";
 import { EventsService } from "./../../../pages/events/shared/events.service";
 import { Component, OnInit } from "@angular/core";
-import { Preferences } from "src/app/shared/services/preferences/preferences.model";
+import { Preferences } from "../../../shared/services/preferences/preferences.model";
 
 @Component({
   selector: "app-navbar",
@@ -13,6 +13,7 @@ import { Preferences } from "src/app/shared/services/preferences/preferences.mod
 export class NavbarComponent implements OnInit {
   events: Array<Events>;
   preferences: Preferences;
+  user: firebase.User;
   constructor(
     private eventsService: EventsService,
     private preferencesService: PreferencesService,
@@ -20,18 +21,19 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.eventsService.getAll().subscribe((events) => {
-      this.events = events;
-      this.getPreferences();
-    });
+    this.user = this.auth.returnUser();
+    // this.eventsService.getAll().subscribe((events) => {
+    //   this.events = events;
+    //   this.getPreferences();
+    // });
   }
 
   getPreferences() {
-    this.preferencesService.getData().subscribe((data) => {
-      if (data) {
-        this.preferences = data;
-      }
-    });
+    // this.preferencesService.getData().subscribe((data) => {
+    //   if (data) {
+    //     this.preferences = data;
+    //   }
+    // });
   }
 
   changeEvent(event) {
@@ -39,7 +41,7 @@ export class NavbarComponent implements OnInit {
     pref.id = "5";
     pref.idUser = "5";
     pref.event = event;
-    this.preferencesService.persistData(pref);
+    // this.preferencesService.persistData(pref);
     this.getPreferences();
   }
 }

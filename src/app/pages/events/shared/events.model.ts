@@ -1,8 +1,7 @@
-import { BaseResourceModel } from 'src/app/shared/models/base-resource.model';
-
+import { BaseResourceModel } from "../../../shared/models/base-resource.model";
 
 export class Events extends BaseResourceModel {
-  constructor (
+  constructor(
     public id?: string,
     public name?: String,
     public description?: string,

@@ -1,8 +1,7 @@
 import { CategoryService } from "./../../categories/shared/category.service";
 import { EntryService } from "./../../entries/shared/entry.service";
 import { Category } from "./../../categories/shared/category.model";
-import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
-import currencyFormatter from "currency-formatter";
+import { Component, OnInit, ElementRef, Input } from "@angular/core";
 import { Entry } from "../../entries/shared/entry.model";
 
 @Component({

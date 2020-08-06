@@ -1,4 +1,3 @@
-import { BaseResourceModel } from "src/app/shared/models/base-resource.model";
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
@@ -7,32 +6,32 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/firestore";
-import { AuthService } from "src/app/security/service/auth.service";
+import { AuthService } from "../../security/service/auth.service";
+import { BaseResourceModel } from "../models/base-resource.model";
 
 export abstract class BaseResourceService<T extends BaseResourceModel> {
   protected http: HttpClient;
   protected firestore: AngularFirestore;
-  protected userService: AuthService;
+  protected authService: AuthService;
   apiPath = "";
   collection: AngularFirestoreCollection;
-  protected userId = "6d1V2r9GztXiiX9KpHaFrHAhpHP2";
+  protected user: firebase.User;
 
-  // '6d1V2r9GztXiiX9KpHaFrHAhpHP2'
   constructor(
     protected baseName: string,
     protected injector: Injector,
     protected jsonDataToResourceFN: (jsonData) => T
   ) {
     this.http = injector.get(HttpClient);
-    this.userService = injector.get(AuthService);
+    this.authService = injector.get(AuthService);
     this.firestore = injector.get(AngularFirestore);
+    this.user = this.authService.returnUser();
   }
 
   private returnCollection(_query_?): AngularFirestoreCollection<T> {
-    return this.firestore.collection(this.baseName);
-    // return this.firestore.collection(this.baseName, (afs) =>
-    // afs.where(`users.${this.userId}`, "==", "true")
-    // );
+    return this.firestore.collection(this.baseName, (afs) =>
+      afs.where(`users.${this.user.uid}`, "==", true)
+    );
   }
 
   getAll(): Observable<T[]> {
@@ -62,6 +61,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     } else {
       _id = this.firestore.createId();
       _document_.id = _id;
+      _document_.users = { [this.user.uid]: true };
     }
 
     return this.firestore
@@ -86,7 +86,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   // Protected
   protected jsonDataToResources(jsonData: any[]): T[] {
     const resources: T[] = [];
-    console.log(jsonData);
     jsonData.forEach((element) =>
       resources.push(this.jsonDataToResourceFN(element))
     );
@@ -98,7 +97,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   }
 
   protected handleError(error: any): Observable<any> {
-    console.log("ERROR:", error);
     return throwError(error);
   }
 }

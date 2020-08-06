@@ -1,23 +1,29 @@
-import { CardsService } from './../../cards/shared/cards.service';
-import { flatMap, catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
-import { Injectable, Injector } from '@angular/core';
-import { Entry } from './entry.model';
-import { CategoryService } from '../../categories/shared/category.service';
-import * as moment from 'moment';
+import { CardsService } from "./../../cards/shared/cards.service";
+import { catchError, map } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { Injectable, Injector } from "@angular/core";
+import { Entry } from "./entry.model";
+import { CategoryService } from "../../categories/shared/category.service";
+import * as moment from "moment";
+import { BaseResourceService } from "../../../shared/services/base-resource.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class EntryService extends BaseResourceService<Entry> {
-
-  constructor(protected injector: Injector, private categoryService: CategoryService, private cardService: CardsService) {
-    super('entries', injector, Entry.fromJson);
+  constructor(
+    protected injector: Injector,
+    private categoryService: CategoryService,
+    private cardService: CardsService
+  ) {
+    super("entries", injector, Entry.fromJson);
   }
 
   create(entry: Entry) {
-    return this.setCategoryAndSendToServer(entry, super.persistDocument.bind(this));
+    return this.setCategoryAndSendToServer(
+      entry,
+      super.persistDocument.bind(this)
+    );
   }
 
   // update(entry: Entry): Observable<Entry> {
@@ -25,13 +31,14 @@ export class EntryService extends BaseResourceService<Entry> {
   // }
 
   getByMonthAndYear(month: number, year: number): Observable<Entry[]> {
-    return this.getAll().pipe(// Send to server already with year and month
-      map(entries => this.filterByMonthAndYear(entries, month, year))
+    return this.getAll().pipe(
+      // Send to server already with year and month
+      map((entries) => this.filterByMonthAndYear(entries, month, year))
     );
   }
 
   private filterByMonthAndYear(entries: Entry[], month: number, year: number) {
-    return entries.filter(entry => {
+    return entries.filter((entry) => {
       const entryDate = moment(entry.date);
 
       const monthMatches = entryDate.month() + 1 == month;
@@ -43,17 +50,17 @@ export class EntryService extends BaseResourceService<Entry> {
   }
 
   private setCategoryAndSendToServer(entry: Entry, sendFn: any) {
-    return this.categoryService.getById(entry.categoryId).subscribe(
-      (category) => {
+    return (
+      this.categoryService.getById(entry.categoryId).subscribe((category) => {
         entry.category = Object.assign({}, category);
-        entry.categoryId = '';
-        return this.cardService.getById(entry.cardId).subscribe(
-          (card) => {
-            entry.card = Object.assign({}, card);
-            entry.cardId = '';
-            return sendFn(entry);
-          });
+        entry.categoryId = "";
+        return this.cardService.getById(entry.cardId).subscribe((card) => {
+          entry.card = Object.assign({}, card);
+          entry.cardId = "";
+          return sendFn(entry);
+        });
       }),
-      catchError(this.handleError);
+      catchError(this.handleError)
+    );
   }
 }
