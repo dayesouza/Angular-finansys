@@ -5,25 +5,25 @@ import { AngularFireAuthGuard } from "@angular/fire/auth-guard/auth-guard";
 const routes: Routes = [
   {
     path: "entries",
-    loadChildren: "./pages/entries/entries.module#EntriesModule",
+    loadChildren: () => import('./pages/entries/entries.module').then(m => m.EntriesModule),
     // canActivate: [AngularFireAuthGuard],
   },
   {
     path: "perfil",
-    loadChildren: "./pages/perfil/perfil.module#PerfilModule",
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilModule),
     // canActivate: [AngularFireAuthGuard],
   },
   {
     path: "categories",
-    loadChildren: "./pages/categories/categories.module#CategoriesModule",
+    loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule),
   },
   {
     path: "reports",
-    loadChildren: "./pages/reports/reports.module#ReportsModule",
+    loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsModule),
   },
-  { path: "cards", loadChildren: "./pages/cards/cards.module#CardsModule" },
-  { path: "events", loadChildren: "./pages/events/events.module#EventsModule" },
-  { path: "login", loadChildren: "./security/security.module#SecurityModule" },
+  { path: "cards", loadChildren: () => import('./pages/cards/cards.module').then(m => m.CardsModule) },
+  { path: "events", loadChildren: () => import('./pages/events/events.module').then(m => m.EventsModule) },
+  { path: "login", loadChildren: () => import('./security/security.module').then(m => m.SecurityModule) },
   { path: "", redirectTo: "reports", pathMatch: "full" },
   { path: "**", redirectTo: "reports", pathMatch: "full" },
 ];

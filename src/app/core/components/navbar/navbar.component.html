@@ -1,12 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
   <a class="navbar-brand" routerLink="/">Finansys</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/reports">Reports <span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="/reports"
+          >Reports <span class="sr-only">(current)</span></a
+        >
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/entries">Entries</a>
@@ -22,9 +32,17 @@
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
       <li class="nav-item">
         <div ngbDropdown>
-          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>{{preferences?.event.name || 'Chose event'}}</button>
+          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>
+            {{ preferences?.event.name || "Chose event" }}
+          </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <span *ngFor="let event of events" (click)="changeEvent(event)" class="dropdown-item" ngbDropdownItem>{{event.name}}</span>
+            <span
+              *ngFor="let event of events"
+              (click)="changeEvent(event)"
+              class="dropdown-item"
+              ngbDropdownItem
+              >{{ event.name }}</span
+            >
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" routerLink="/events/new">+ New event</a>
           </div>
@@ -32,16 +50,20 @@
       </li>
 
       <li class="nav-item user-info">
-          <div ngbDropdown>
-              <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>
-                  <img src="../../../../assets/img/question-mark.png" alt="user img" class="mr-2">{{auth.user?.displayName || 'Guest'}}
-                </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <a class="dropdown-item" routerLink="/perfil" ngbDropdownItem>Meu perfil</a>
-                  <div class="dropdown-divider"></div>
-                  <a (click)="auth.signOut()" class="dropdown-item" ngbDropdownItem>Sair</a>
-              </div>
-            </div>
+        <div ngbDropdown>
+          <button class="btn btn_title" id="dropdownBasic1" ngbDropdownToggle>
+            <!-- <img src="../../../../assets/img/question-mark.png" alt="user img" class="mr-2">{{auth.user?.displayName || 'Guest'}} -->
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a class="dropdown-item" routerLink="/perfil" ngbDropdownItem
+              >Meu perfil</a
+            >
+            <div class="dropdown-divider"></div>
+            <a (click)="auth.signOut()" class="dropdown-item" ngbDropdownItem
+              >Sair</a
+            >
+          </div>
+        </div>
       </li>
     </ul>
   </div>
